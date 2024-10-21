@@ -42,10 +42,14 @@ def is_valid(license_plate):
     
     isSecondLetter = license_plate[1].isalpha()
 
-    if (len(license_plate) != 7 + int(isSecondLetter) or not license_plate[0].isalpha() or not license_plate[-2:].isalpha() or not license_plate[-6:-2].isdigit()):
+    if (len(license_plate) != 7 + int(isSecondLetter) 
+        or not license_plate[0].isalpha() 
+        or not license_plate[-2:].isalpha() 
+        or not license_plate[-6:-2].isdigit()):
         return False, INVALID_FORMAT_MSG
     
-    if (not { license_plate[0], *license_plate[-2:] } <= ALLOWED_LETTERS or (isSecondLetter and not license_plate[1] in ALLOWED_LETTERS)):
+    if (not { license_plate[0], *license_plate[-2:] } <= ALLOWED_LETTERS 
+        or (isSecondLetter and not license_plate[1] in ALLOWED_LETTERS)):
         return False, INVALID_LETTERS_MSG
     
     region = REGION_CODES.get(license_plate[0:2] if isSecondLetter else license_plate[0])
