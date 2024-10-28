@@ -10,9 +10,9 @@ def calculate_area(a, b):
     return width * height
 
 def get_areas(starting_points, ending_points, n):
-    return sorted(filter(lambda rect: rect.area > n, \
-                    map(lambda x: Rectangle(x[0], x[1], calculate_area(x[0], x[1])), \
-                        zip(starting_points, ending_points))), key = lambda rect: -rect.area)
+    return sorted(filter(lambda rect: rect.area > n,
+                    (Rectangle(start, end, calculate_area(start, end)) for start, end in zip(starting_points, ending_points))),
+                    key = lambda rect: -rect.area)
 
 starting_points = [
     Point(2, 3), 

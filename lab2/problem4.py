@@ -6,16 +6,16 @@ def pretty_print(matrix):
     print('-' * (len(matrix[0]) * 2 - 1))
 
 def get_column(matrix, column):
-    return list(row[column] for row in matrix)
+    return [row[column] for row in matrix]
 
 def rotate_clockwise(matrix):
-    return list(list(reversed(get_column(matrix, i))) for i in range(len(matrix[0])))
+    return [list(reversed(get_column(matrix, i))) for i in range(len(matrix[0]))]
 
 def rotate_counterclockwise(matrix):
-    return list(get_column(matrix, i) for i in range(len(matrix[0]) - 1, -1, -1))
+    return [get_column(matrix, i) for i in range(len(matrix[0]) - 1, -1, -1)]
 
 def flip_horizontal(matrix):
-    return list(list(reversed(row)) for row in matrix)
+    return [list(reversed(row)) for row in matrix]
 
 def flip_vertical(matrix):
     return list(reversed(matrix))

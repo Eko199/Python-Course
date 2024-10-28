@@ -6,7 +6,7 @@ def sdrawkcab(function):
             return result[::-1]
         
         if (isinstance(result, list)):
-            return list(map(lambda x: x[::-1] if isinstance(x, str) else x, result))
+            return [x[::-1] if isinstance(x, str) else x for x in result]
         
         return result
         
