@@ -2,10 +2,10 @@ def sdrawkcab(function):
     def inner(*args, **kwargs):
         result = function(*args , **kwargs)
 
-        if (isinstance(result, str)):
+        if isinstance(result, str):
             return result[::-1]
         
-        if (isinstance(result, list)):
+        if isinstance(result, list):
             return [x[::-1] if isinstance(x, str) else x for x in result]
         
         return result
