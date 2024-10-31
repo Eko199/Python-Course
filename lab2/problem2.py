@@ -1,8 +1,8 @@
 # Write your code here:
 MOVES = [(-2, -1), (-2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2), (2, -1), (2, 1)]
 
-def possible_moves(row, collumn):
-    nextMove = lambda move: (chr(ord(row) + move[0]), collumn + move[1])
+def possible_moves(collumn, row):
+    nextMove = lambda move: (chr(ord(collumn) + move[0]), row + move[1])
     return (nextMove(move) for move in MOVES if 'a' <= nextMove(move)[0] <= 'h' and 1 <= nextMove(move)[1] <= 8)
 
 # 2 possible moves
