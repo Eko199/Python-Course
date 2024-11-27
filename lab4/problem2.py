@@ -18,13 +18,7 @@ class LAIKA:
                 last = string[i] + last
 
         encoded: str = first + last
-        result: list[str] = []
-
-        for i in range(n, len(encoded) + 1, n):
-            result.append(encoded[i - n:i])
-
-        if len(encoded) % n != 0:
-            result.append(encoded[-(len(encoded) % n):])
+        result: list[str] = [encoded[i - n:i] for i in range(n, len(encoded) + n, n)]
 
         return result
     
@@ -43,7 +37,7 @@ class LAIKA:
     def encode_to_files(self, string: str, n: int) -> str:
         encoded: list[str] = self.encode(string, n)
 
-        fileNames: list[str] = ["".join(chr(ord(c) + self.caeser_key) for c in part) for part in encoded] + [""]
+        fileNames: list[str] = ["".join(chr(ord("a") + (ord(c) - ord("a") + self.caeser_key) % 26) for c in part) for part in encoded] + [""]
 
         for i, content in enumerate(encoded):
             path: str = os.path.join(self.path, fileNames[i])
@@ -55,6 +49,21 @@ class LAIKA:
                 file.writelines([fileNames[i + 1] + "\n", content])
 
         return fileNames[0]
+    
+    def decode_from_files(self, fileName: str) -> str:
+        encoded: list[str] = []
+
+        while fileName != "":
+            path: str = os.path.join(self.path, fileName)
+            
+            if not os.path.exists(path):
+                raise FileNotFoundError(path)
+
+            with open(path) as file:
+                fileName = file.readline().strip()
+                encoded.append(file.readline().strip())
+
+        return self.decode(encoded)
 
 # Tests
 
@@ -126,24 +135,24 @@ assert next_file == "jhf"
 assert content == "ljh"
 
 
-# # decode_from_files
-# assert l1.decode_from_files("egi") == "abcdefghijkl"
+# decode_from_files
+assert l1.decode_from_files("egi") == "abcdefghijkl"
 
-# # Exception
+# Exception
 
-# try:
-#     l1.encode_to_files("abcdefghijkl", 3)
-# except FileExistsError:
-#     assert True
-# except Exception:
-#     assert False
+try:
+    l1.encode_to_files("abcdefghijkl", 3)
+except FileExistsError:
+    assert True
+except Exception:
+    assert False
 
 
-# try:
-#     l1.decode_from_files("non-existing-file")
-# except FileNotFoundError:
-#     assert True
-# except Exception:
-#     assert False
+try:
+    l1.decode_from_files("non-existing-file")
+except FileNotFoundError:
+    assert True
+except Exception:
+    assert False
 
-# print("✅ All OK! +2 points")
+print("✅ All OK! +2 points")
