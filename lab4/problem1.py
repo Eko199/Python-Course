@@ -1,4 +1,5 @@
 import os
+from collections import Counter
 
 class InvalidLineError(Exception):
     def __init__(self, line: str) -> None:
@@ -44,7 +45,7 @@ def validate_list(path: str) -> float:
                 if not quantity.isdigit():
                     raise InvalidQuantityError((name, quantity))
 
-                if not set(price) <= set("1234567890.") or price.endswith("."):
+                if not set(price) <= set("1234567890.") or price.endswith(".") or Counter(price)["."] > 1:
                     raise InvalidPriceError((name, price))
                 
                 sum += int(quantity) * float(price)

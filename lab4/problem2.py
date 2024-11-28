@@ -155,4 +155,4 @@ except FileNotFoundError:
 except Exception:
     assert False
 
-print("✅ All OK! +2 points")
+print(" All OK! +2 points")
